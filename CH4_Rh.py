@@ -6,6 +6,18 @@ from ase.build import molecule, fcc111, add_adsorbate
 from ase.calculators.vasp import Vasp
 from ase.test import must_raise
 
+def remove_files():
+    files = ['CHG', 'CHGCAR', 'POSCAR', 'INCAR', 'CONTCAR',
+             'DOSCAR', 'EIGENVAL', 'IBZKPT', 'KPOINTS', 'OSZICAR',
+             'OUTCAR', 'PCDAT', 'POTCAR', 'vasprun.xml',
+             'WAVECAR', 'XDATCAR', 'PROCAR', 'ase-sort.dat',
+             'LOCPOT', 'AECCAR0', 'AECCAR1', 'AECCAR2']
+    for f in files:
+        try:
+           os.remove(f)
+        except OSError:
+           pass
+
 DIR_CH4 = 'mole_CH4'
 DIRTEST = os.path.isdir(DIR_CH4)
 
@@ -13,7 +25,6 @@ if (not DIRTEST):
     os.mkdir(DIR_CH4)
 os.chdir(DIR_CH4)
 
-print(os.getcwd())
 print(molecule("CH4"))
 # CH4 = Atoms('CH4',pbc=True)
 CH4 = molecule('CH4')
@@ -24,16 +35,16 @@ calc = Vasp(prec='Accurate',
             xc='PBE',
             lreal=False)
 
-CH4.set_calculator(calc)
+# CH4.set_calculator(calc)
 # with must_raise(ValueError):
 #     CH4.set_calculator(calc)
 #     CH4.get_total_energy()
 
 # print(CH4.get_potential_energy())
-print(CH4.get_total_energy())
+# print(CH4.get_total_energy())
 
 os.chdir("../")
-print(os.getcwd())
+# print(os.getcwd())
 
 DIR_Rh = 'slab_Rh'
 DIRTEST = os.path.isdir(DIR_Rh)
@@ -49,8 +60,16 @@ calc = Vasp(prec='Accurate',
             gamma=False, kpts=(4,4,1))
 calc.write_kpoints()
 #
-#slab.set_calculator(calc)
+os.chdir("../")
+# print(os.getcwd())
+
+slab.center()
+add_adsorbate(slab, CH4, 1.5, 'bridge')
+slab.set_pbc((True, True, False))
+slab.set_calculator(calc)
 #
-#print(slab.get_total_energy())
+print(slab.get_total_energy())
+
 #os.chdir("../")
+
 
