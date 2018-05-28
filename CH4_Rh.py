@@ -62,14 +62,3 @@ calc.write_kpoints()
 #
 os.chdir("../")
 # print(os.getcwd())
-
-slab.center()
-add_adsorbate(slab, CH4, 1.5, 'bridge')
-slab.set_pbc((True, True, False))
-slab.set_calculator(calc)
-#
-print(slab.get_total_energy())
-
-#os.chdir("../")
-
-
