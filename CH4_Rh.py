@@ -35,12 +35,12 @@ calc = Vasp(prec='Accurate',
             xc='PBE',
             lreal=False)
 
-# CH4.set_calculator(calc)
+CH4.set_calculator(calc)
 # with must_raise(ValueError):
 #     CH4.set_calculator(calc)
 #     CH4.get_total_energy()
 
-# print(CH4.get_potential_energy())
+print(CH4.get_potential_energy())
 # print(CH4.get_total_energy())
 
 os.chdir("../")
