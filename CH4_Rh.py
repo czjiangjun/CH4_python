@@ -62,4 +62,3 @@ calc.write_kpoints()
 #
 os.chdir("../")
 # print(os.getcwd())
-
